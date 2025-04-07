@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Diferencia de Horas</title>
+    <script>
+        function calcularDiferencia() {
+            // Obtener las fechas y horas ingresadas
+            const fechaHora1 = new Date(document.getElementById("fechaHora1").value);
+            const fechaHora2 = new Date(document.getElementById("fechaHora2").value);
+            
+            // Verificar si las fechas son válidas
+            if (isNaN(fechaHora1.getTime()) || isNaN(fechaHora2.getTime())) {
+                document.getElementById("resultado").innerText = "Por favor, ingrese ambas fechas válidas.";
+                return;
+            }
+            
+            // Calcular la diferencia en milisegundos
+            const diferencia = Math.abs(fechaHora2 - fechaHora1);
+            
+            // Convertir la diferencia a horas
+            const horasDiferencia = diferencia / (1000 * 60 * 60);
+            
+            // Calcular días completos (sin decimales)
+            const diasCompletos = Math.floor(horasDiferencia / 24);
+            
+            // Calcular horas restantes después de los días completos
+            const horasRestantes = Math.floor(horasDiferencia % 24);
+            
+            // Mostrar el resultado
+            let resultado = `La diferencia es de ${horasDiferencia.toFixed(2)} horas.`;
+            
+            if (diasCompletos > 0) {
+                resultado += ` Esto equivale a ${diasCompletos} día${diasCompletos !== 1 ? 's' : ''}`;
+                if (horasRestantes > 0) {
+                    resultado += ` y ${horasRestantes} hora${horasRestantes !== 1 ? 's' : ''}`;
+                }
+                resultado += ".";
+            }
+            
+            document.getElementById("resultado").innerText = resultado;
+        }
+    </script>
+</head>
+<body>
+    <h1>Calculadora de Diferencia de Horas</h1>
+    <label for="fechaHora1">Fecha y Hora 1:</label>
+    <input type="datetime-local" id="fechaHora1" required>
+    <br><br>
+    <label for="fechaHora2">Fecha y Hora 2:</label>
+    <input type="datetime-local" id="fechaHora2" required>
+    <br><br>
+    <button onclick="calcularDiferencia()">Calcular Diferencia</button>
+    <h2 id="resultado"></h2>
+</body>
+  </html>
